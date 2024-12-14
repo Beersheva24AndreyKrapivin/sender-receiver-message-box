@@ -5,7 +5,6 @@ public class Receiver extends Thread{
 
     public Receiver(MessageBox messageBox) {
         this.messageBox = messageBox;
-
         setDaemon(true);
     }
     
