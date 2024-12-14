@@ -7,13 +7,19 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         MessageBox messageBox = new SimpleMessageBox();
         Sender sender = new Sender(N_MESSAGES, messageBox);
+
+        Receiver[] receivers = new Receiver[N_RECEIVERS];
         for (int i = 0; i < N_RECEIVERS; i++) {
-            new Receiver(messageBox).start();
+            receivers[i] = new Receiver(messageBox);
+            receivers[i].start();
         }
         sender.start();
         sender.join();
-        //FIXME line 16 should be taken out
-        Thread.sleep(100);
-        //TODO stopping all receivers
+
+        for (Receiver receiver : receivers) {
+            receiver.stopReceiver();
+            receiver.join();
+        }
+        System.out.println("Stop");
     }
 }
